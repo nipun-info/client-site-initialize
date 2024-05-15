@@ -1,8 +1,11 @@
+import Carousel from "./Carousel/Carousel";
+import TabCategories from "./TabCategories/TabCategories";
 
 const Home = () => {
     return (
         <div>
-            <h2></h2>
+            <Carousel />
+            <TabCategories />
         </div>
     );
 };

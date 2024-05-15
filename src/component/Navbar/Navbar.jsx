@@ -2,9 +2,19 @@
 import { useContext } from 'react'
 import logo from '../../assets/images/logo.png'
 import { AuthContext } from '../../provider/AuthProvider'
+import { Link, useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const Navbar = () => {
-    const { user } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext);
+    const navigate = useNavigate()
+    const handleSignOut = () => {
+        logOut();
+        navigate('/login')
+        toast.success('Sign Out Successful')
+    }
+
+
     return (
         <div className='navbar bg-base-100 shadow-sm container px-4 mx-auto'>
             <div className='flex-1'>
@@ -16,12 +26,12 @@ const Navbar = () => {
             <div className='flex-none'>
                 <ul className='menu menu-horizontal px-1'>
                     <li>
-                        <div>Home</div>
+                        <Link to="/" >Home</Link>
                     </li>
 
                     {!user && (
                         <li>
-                            <div>Login</div>
+                            <Link to='/login'>Login</Link>
                         </li>
                     )}
                 </ul>
@@ -33,11 +43,11 @@ const Navbar = () => {
                             role='button'
                             className='btn btn-ghost btn-circle avatar'
                         >
-                            <div className='w-10 rounded-full' title=''>
+                            <div className='w-10 rounded-full' title={user?.displayName}>
                                 <img
                                     referrerPolicy='no-referrer'
                                     alt='User Profile Photo'
-                                    src=''
+                                    src={user?.photoURL}
                                 />
                             </div>
                         </div>
@@ -46,19 +56,19 @@ const Navbar = () => {
                             className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
                         >
                             <li>
-                                <div className='justify-between'>Add Job</div>
+                                <Link to='/add-job' className='justify-between'>Add Job</Link>
                             </li>
                             <li>
-                                <div>My Posted Jobs</div>
+                                <Link to='/my-posted-jobs'>My Posted Jobs</Link>
                             </li>
                             <li>
-                                <div>My Bids</div>
+                                <Link to='/my-bids'>My Bids</Link>
                             </li>
                             <li>
-                                <div>Bid Requests</div>
+                                <Link to='bid-requests'>Bid Requests</Link>
                             </li>
                             <li className='mt-2'>
-                                <button className='bg-gray-200 block text-center'>Logout</button>
+                                <button onClick={handleSignOut} className='bg-gray-200 block text-center'>Logout</button>
                             </li>
                         </ul>
                     </div>
